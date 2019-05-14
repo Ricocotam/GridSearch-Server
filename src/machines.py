@@ -9,16 +9,18 @@ class Server(object):
                  connection: fabric.Connection, 
                  prefixs: List[str]):
         self.name = name
+        self.connection = connection
         self.generator = set_generator
-        self.prefixs = prefixs
-    
-    def add_prepro(self, *commands):
-        self.prefixs.extend(commands)
+        self.prefixs = " && ".join(prefixs)
+
+    def start(self):
+        self.connection.open()
 
     def start_experiment(self, gpu: str):
-        pass
-
-    
+        assert self.connection.is_connected
+        command = self.generator.get_experiment(gpu)
+        command = f"{self.prefixs} && {command}"
+        self.connection.run(command)
 
 
 class GPU(object):
