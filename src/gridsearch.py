@@ -57,5 +57,5 @@ def product(**kwargs: ParameterPossibilities
     ...
     {"param1": 4, "param2": "super-hard"}
     """
-    for item in utils.kwargs_product(kwargs):
+    for item in utils.kwargs_product(**kwargs):
         yield item

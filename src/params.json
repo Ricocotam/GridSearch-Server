@@ -1,0 +1,21 @@
+{
+    "parameters": [
+        {
+            "type": "product",
+            "parameters":{
+                "batch": [1, 2, 4, 16, 32, 561, 561, 561, 81, 1, 58 , 281, 1, 518, 1, 518],
+                "hsize": [32, 64, 128, 256, 1024],
+                "layer": [1, 2, 4, 16, 32, 561, 561, 561, 81, 1, 58 , 281, 1, 518, 1, 518]
+            }
+        },
+        {
+            "type": "listing",
+            "parameters":[
+                {"batch": 5, "hsize": 21, "layer": 12},
+                {"batch": 8, "hsize": 16, "layer": 5},
+                {"batch": 12, "hsize": 31, "layer": 8}
+            ]
+        }
+    ],
+    "format": "touch h-{hsize}_b-{batch}_l-{layer}_d-{gpu}"
+}

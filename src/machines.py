@@ -70,6 +70,10 @@ class GPU(object):
     def start(self):
         self.thread.start()
 
+    def stop(self):
+        with self.killing_lock:
+            self.nb_kill = len(self.threads)
+
     def run_experiments(self):
         """Run the experiments on the GPU.
         
@@ -115,9 +119,14 @@ class GPU(object):
         set to try or if the number of experiments/gpu has been reduced.
         """
         while True:
+            print("New Experiment")
             with self.killing_lock:
+                print("checking nb_to_kill :", self.nb_to_kill)
                 if self.nb_to_kill > 0:
+                    print("Killing myself")
                     self.nb_to_kill -= 1
                     break
-
-            self.server.start_experiment(self.name)
+            try:
+                self.server.start_experiment(self.name)
+            except StopIteration:
+                break

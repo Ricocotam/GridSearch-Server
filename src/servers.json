@@ -1,0 +1,38 @@
+{
+    "servers": [
+        {
+            "name": "titan",
+            "prefixs": [
+                "cd /local/pouyet/exp"
+            ],
+            "gpus": [
+                {
+                    "name":"1",
+                    "max_xp": 1
+                },
+                {
+                    "name": "3",
+                    "max_xp": 1
+                }
+            ]
+        },
+        {
+            "name": "sledge",
+            "prefixs": [
+                "cd /local/pouyet/py37",
+                "source .env",
+                "cd .."
+            ],
+            "gpus": [
+                {
+                    "name":"1",
+                    "max_xp": 1
+                },
+                {
+                    "name": "3",
+                    "max_xp": 1
+                }
+            ]
+        }
+    ]
+}

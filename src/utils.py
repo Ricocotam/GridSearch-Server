@@ -15,5 +15,5 @@ class LockedIterator(object):
         
 
 def kwargs_product(**kwargs):
-    for combination in itertools.product(kwargs.values()):
-        return dict(zip(kwargs.keys(), combination))
+    for combination in itertools.product(*kwargs.values()):
+        yield dict(zip(kwargs.keys(), combination))
