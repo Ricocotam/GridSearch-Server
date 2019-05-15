@@ -1,3 +1,4 @@
+"""This module aims to handle the different machine objects (servers and gpus for now)."""
 import threading
 
 from typing import Iterator, List, Callable
@@ -15,9 +16,11 @@ class Server(object):
         self.prefixs = " && ".join(prefixs)
 
     def start(self):
+        """Open the connection to the server."""
         self.connection.open()
 
     def start_experiment(self, gpu: str):
+        """Start one experiment on the server with a specific gpu name."""
         assert self.connection.is_connected
         command = self.generator.get_experiment(gpu)
         command = f"{self.prefixs} && {command}"
@@ -69,9 +72,11 @@ class GPU(object):
         self.nb_max_exp = new_nb
 
     def start(self):
+        """Starts the experiments on the GPU."""
         self.thread.start()
 
     def stop(self):
+        """Stops the experiments on the GPU. Waits for jobs to terminate."""
         with self.killing_lock:
             self.nb_to_kill = len(self.threads)
 
@@ -119,11 +124,8 @@ class GPU(object):
         set to try or if the number of experiments/gpu has been reduced.
         """
         while True:
-            print("New Experiment")
             with self.killing_lock:
-                print("checking nb_to_kill :", self.nb_to_kill)
                 if self.nb_to_kill > 0:
-                    print("Killing myself")
                     self.nb_to_kill -= 1
                     break
             try:

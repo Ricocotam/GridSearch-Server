@@ -3,6 +3,7 @@ import threading
 
 
 class LockedIterator(object):
+    """Thread Safe iterator."""
     def __init__(self, it):
         self.lock = threading.Lock()
         self.it = it.__iter__()
@@ -16,6 +17,7 @@ class LockedIterator(object):
         
 
 def kwargs_product(**kwargs):
+    """Cartesian Product keeping the name of variables."""
     for combination in itertools.product(*kwargs.values()):
         yield dict(zip(kwargs.keys(), combination))
 
