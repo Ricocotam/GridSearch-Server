@@ -1,5 +1,3 @@
-
-
 class CommandGenerator(object):
     def __init__(self, iterator, formating_function):
         self.iterator = iterator
@@ -9,3 +7,7 @@ class CommandGenerator(object):
         params = next(self.iterator)
         formated = self.formating_function(params, gpu)
         return formated
+
+
+if __name__ == "__main__":
+    pass

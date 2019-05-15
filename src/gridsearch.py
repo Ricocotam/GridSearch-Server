@@ -5,12 +5,15 @@ The functions defined here are only used to get parameters.
 When possible, generators are preferred.
 """
 import itertools
+
 from typing import Dict, Sequence, Any
 
 import utils
 
+
 ParameterSet = Dict[str, Any]
 ParameterPossibilities = Dict[str, Sequence[Any]]
+
 
 def listing(*list_sets: Sequence[ParameterSet]
             ) -> ParameterSet:
@@ -59,3 +62,7 @@ def product(**kwargs: ParameterPossibilities
     """
     for item in utils.kwargs_product(**kwargs):
         yield item
+
+
+if __name__ == "__main__":
+    pass

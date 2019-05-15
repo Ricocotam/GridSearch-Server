@@ -1,6 +1,7 @@
 import itertools
 import threading
 
+
 class LockedIterator(object):
     def __init__(self, it):
         self.lock = threading.Lock()
@@ -17,3 +18,7 @@ class LockedIterator(object):
 def kwargs_product(**kwargs):
     for combination in itertools.product(*kwargs.values()):
         yield dict(zip(kwargs.keys(), combination))
+
+
+if __name__ == "__main__":
+    pass

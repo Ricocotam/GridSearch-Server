@@ -1,19 +1,18 @@
 import itertools
+import json
+
 from argparse import ArgumentParser
 
-import json
 from fabric import Connection
 
-from utils import LockedIterator
-from gridsearch import product, listing
-from generator import CommandGenerator
-from machines import Server, GPU
+from .utils import LockedIterator
+from .gridsearch import product, listing
+from .generator import CommandGenerator
+from .machines import Server, GPU
 
 
 def get_formating_function(string):
-    def form(params, gpu):
-        return string.format(gpu=gpu, **params)
-    return form
+    return lambda params, gpu: string.format(gpu=gpu, **params)
 
 
 def get_param_sets(filename):
@@ -30,6 +29,7 @@ def get_param_sets(filename):
     iterator = itertools.chain(*iterators)
     formating_function = get_formating_function(a["format"])
     return iterator, formating_function
+
 
 def get_servers_gpus(filename, generator):
     with open(filename, "r") as f:
@@ -49,10 +49,8 @@ def get_servers_gpus(filename, generator):
     ]
     return servers.values(), gpus
 
-def main():
-    paramset_file = "params.json"
-    server_file = "servers.json"
-    
+
+def main(paramset_file, server_file):
     iterator, formating_function = get_param_sets(paramset_file)
     iterator = LockedIterator(iterator)
     generator = CommandGenerator(iterator, formating_function)
@@ -68,7 +66,5 @@ def main():
         gpu.start()
 
 
-
-
 if __name__ == "__main__":
-    main()
+    main(paramset_file="params.json", server_file="servers.json")

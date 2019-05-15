@@ -1,4 +1,5 @@
 import threading
+
 from typing import Iterator, List, Callable
 
 import fabric
@@ -72,7 +73,7 @@ class GPU(object):
 
     def stop(self):
         with self.killing_lock:
-            self.nb_kill = len(self.threads)
+            self.nb_to_kill = len(self.threads)
 
     def run_experiments(self):
         """Run the experiments on the GPU.
@@ -111,7 +112,6 @@ class GPU(object):
             all_joined = True
             prev_len = len(self.threads)
 
-
     def run_one_experiment(self):
         """One thread running one experiment at the time.
         
@@ -130,3 +130,7 @@ class GPU(object):
                 self.server.start_experiment(self.name)
             except StopIteration:
                 break
+
+
+if __name__ == "__main__":
+    pass
